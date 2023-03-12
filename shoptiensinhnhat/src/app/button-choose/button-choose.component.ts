@@ -10,6 +10,7 @@ export class ButtonChooseComponent implements OnInit {
   @Output() AddToCartEvent = new EventEmitter<number>();
   @Input() data: any;
   numberOrder: any;
+  clicked = false;
   constructor() { }
 
   ngOnInit() {

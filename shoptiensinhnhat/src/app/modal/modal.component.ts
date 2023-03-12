@@ -1,23 +1,19 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalServiceService } from './modal-service.service';
+import { compileNgModule } from '@angular/compiler';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css']
 })
-export class ModalComponent implements OnInit, AfterViewInit {
+export class ModalComponent implements OnInit, OnChanges  {
   @Input() getOrder: any = [];
+  @Input() totalOrder: any = 0;
   @Output() quantity = new EventEmitter<number>();
-  @ViewChild("codeAndSeri", { read: ElementRef })
-  codeAndSeri!: ElementRef;
-  @ViewChild("faceValueOfMoney", { read: ElementRef })
-  faceValueOfMoney!: ElementRef;
-  @ViewChild("total", { read: ElementRef })
-  total!: ElementRef;
-  @ViewChild("price", { read: ElementRef })
-  price!: ElementRef;
+
   method = 1;
   number_account: string = '8162186418426';
   message: string = '';
@@ -31,21 +27,21 @@ export class ModalComponent implements OnInit, AfterViewInit {
   price100k: number = 300000;
   price200k: number = 400000;
   ship: number = 30000;
-
+  totalAndShip: number = 0;
+  allPrice:any = [];
   constructor(private fb: FormBuilder,
     private modalService: ModalServiceService) { }
-  ngAfterViewInit(): void {
-  }
 
+    ngOnChanges(changes: SimpleChanges) {
+      this.totalOrder = localStorage['total'];
+      this.totalAndShip = Number(this.totalOrder) + this.ship;
+    }
   ngOnInit(): void {
     this.inforForm = this.fb.group({
       name: [''],
       phone: [''],
       address: [''],
       note: [''],
-      seri: [''],
-      code: [''],
-      displayValue: [''],
       pay_method: [''],
     });
   }
@@ -56,36 +52,48 @@ export class ModalComponent implements OnInit, AfterViewInit {
     this.method = 2;
   }
   toOrder() {
+    let ifOrder = JSON.parse(localStorage['data_order']);
+    if (ifOrder == '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Có lỗi xảy ra!',
+        text: 'Vui lòng chọn đơn hàng trước khi thanh toán',
+      })
+    }
     let data = {
-      codeAndSeri: this.codeAndSeri?.nativeElement?.textContent,
-      faceValueOfMoney: this.faceValueOfMoney?.nativeElement?.textContent,
-      total: this.total?.nativeElement?.textContent,
-      price: this.price?.nativeElement?.textContent,
       name: this.inforForm.value.name,
       phone: this.inforForm.value.phone,
       address: this.inforForm.value.address,
       note: this.inforForm?.value.note,
       pay_method: this.method,
+      ifOrder: ifOrder,
     }
+    console.log(data);
+
+
     this.modalService.sendMail(data).then((res: any) => {
-      console.log(res);
 
     })
   }
   delete(id: any) {
     let newObj = JSON.parse(localStorage['data_order']);
     newObj.forEach((element: any, index: any) => {
-      console.log(id, index);
       if (index == id) {
         newObj.splice(index, 1);
-        localStorage.clear();
+        localStorage.removeItem('data_order');
         localStorage.setItem('data_order', JSON.stringify(newObj));
         this.getOrder = JSON.parse(localStorage['data_order']);
         this.quantity.emit(this.getOrder.length);
-        console.log(this.quantity);
-
       }
     });
+
+    let totalMoney = 0;
+      const total = this.getOrder.map((val: any) => {
+        totalMoney += Number(val.price)
+      });
+      localStorage.setItem('total', JSON.stringify(totalMoney));
+      this.totalOrder = Number(localStorage.getItem('total'));
+      this.totalAndShip = Number(this.totalOrder) + this.ship;
   }
   copyText(val: string) {
     let selBox = document.createElement('textarea');

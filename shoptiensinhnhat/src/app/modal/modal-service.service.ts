@@ -9,17 +9,36 @@ export class ModalServiceService {
   constructor(private http: HttpClient) { }
   sendMail(data: any) {
     const response = new Promise(resolve => {
-      this.http.post(environment.urlBackend + `send-mail-when-order`, data).subscribe(res => {
+      this.http.post(environment.urlBackend + `send-mail-when-order`, data).subscribe((res: any) => {
         resolve(res)
-        console.log(res);
+        console.log();
 
+        if (res.success == true) {
+          Swal.fire({
+            title: 'Chúc mừng bạn đã đặt hàng thành công.',
+            width: 600,
+            timer: 2000,
+            icon: 'success',
+            padding: '3em',
+            color: '#716add',
+            background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
+            backdrop: `
+                rgba(0,0,123,0.4)
+                url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                left top
+                no-repeat
+              `
+          });
+          window.location.reload();
+
+        }
       }, err => {
         let error = err.error.message;
         console.log(err);
         Swal.fire({
           icon: 'error',
           title: 'Có lỗi xảy ra!',
-          text: error.codeAndSeri || error.name || error.phone || error.address,
+          text: error.name || error.phone || error.address,
         })
       });
     });

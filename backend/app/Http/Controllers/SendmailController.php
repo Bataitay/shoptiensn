@@ -16,12 +16,10 @@ class SendmailController extends Controller
              'name' => 'required',
              'phone' => 'required',
              'address' => 'required',
-             'codeAndSeri' => 'required',
         ],[
             'name.required' => 'Vui lòng điền tên',
             'phone.required' => 'Vui lòng điền số điện thoại',
             'address.required' => 'Vui lòng điền địa chỉ',
-            'codeAndSeri.required' => 'Vui lòng chọn đơn hàng trước khi thanh toán',
         ]);
 
         if ($validator->fails()) {
@@ -29,13 +27,14 @@ class SendmailController extends Controller
         }
 
         $data = $request->all();
-        $email = 'shoptiensinhnhat@gmail.com.com';
+        $email = 'ngocduongn191@gmail.com';
         try {
             if ($data) {
                 Mail::to($email)->send(new OrderShipped($data));
                 return new JsonResponse(
                     [
                         'success' => true,
+                        'data' => $data,
                     ],
                     200
                 );
@@ -45,6 +44,7 @@ class SendmailController extends Controller
             return new JsonResponse(
                 [
                     'error' => true,
+                    'data' => $data,
                 ],
                 400
             );

@@ -45,18 +45,15 @@ class OrderShipped extends Mailable
      */
     public function content()
     {
+        $total = 0;
+        foreach ($this->data['ifOrder'] as $value){
+            $total += (int) $value['price'];
+        }
         return new Content(
             view: 'sendmail',
             with: [
-                'name' => $this->data['name'],
-                'phone' => $this->data['phone'],
-                'address' => $this->data['address'],
-                'codeAndSeri' => $this->data['codeAndSeri'],
-                'faceValueOfMoney' => $this->data['faceValueOfMoney'],
-                'pay_method' => $this->data['pay_method'],
-                'total' => $this->data['total'],
-                'price' => $this->data['price'],
-                'note' => $this->data['note'],
+                'data' => $this->data,
+                'total' => $total + 30000,
                 'date' => Carbon::now('Asia/Ho_Chi_Minh')->format('d-M-Y H:i')
             ],
         );

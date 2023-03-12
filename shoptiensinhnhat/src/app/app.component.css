@@ -188,6 +188,7 @@ body {
   margin-right: 5px;
   border: 1px solid rgb(186, 186, 186);
   text-align: center;
+  width: 100% !important;
 }
 
 .day {
@@ -485,6 +486,46 @@ input:focus-visible {
   font-family: Roboto !important;
   font-size: 13px;
 }
+.code-200k {
+  position: absolute;
+  color: #c23927;
+  margin: 30px 0px 0px 1px;
+  font-family: Abel-Regular, Abel !important;
+  font-weight: 400 !important;
+  font-size: 11px;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+}
+
+.siri-200k {
+  position: absolute;
+  color: #bc5a46;
+  margin: 54px 0px 0px 9px;
+  font-family: Roboto !important;
+  font-size: 11px;
+  line-height: 0;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  letter-spacing: -3px;
+}
+
+.code-200k-bt {
+  position: absolute;
+  color: #2c2730;
+  margin: 136px 0px 0px -103px;
+  font-family: Roboto !important;
+  font-weight: 400 !important;
+  font-size: 14px;
+}
+
+.siri-200k-bt {
+  position: absolute;
+  color: #2c2730;
+  margin: 136px 0px 0px -83px;
+  font-family: Roboto !important;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
 
 .fa-money-bill {
   font-size: 24px;
@@ -512,7 +553,7 @@ input:focus-visible {
 }
 
 .btn-order {
-  margin-left: 167px;
+  margin-left: 23px;
 }
 
 .bi-arrows-angle-contract {
@@ -562,3 +603,75 @@ input:focus-visible {
   bottom: 0;
   left: 0;
 }
+.get-padding{
+  padding-bottom: 43px;
+}
+@media (max-width:480px) {
+  #result{
+    width: 100%;
+  }
+  .main {
+    width: 100%;
+  }
+  .arrow {
+    font-size: 11px;
+    margin: 17px 0px 0px 59px;
+}
+.process {
+  width: 42px;
+  height: 42px;
+}
+.process h6{
+  font-size: 8px;
+  margin-top: -29px;
+}
+.arrow {
+  padding: 5px;
+  font-size: 11px;
+  margin: 17px 0px 0px 59px;
+}
+.search,
+.money,
+.get {
+  margin-left: 55px;
+}
+.process .order {
+  margin-top: 16px;
+}
+.title-main{
+  width: 86%;
+  margin: 20px auto 15px 26px;
+}
+.day {
+  margin-left: 5px;
+}
+.search-base input {
+  width: 80px;
+  font-size: 14px;
+}
+.couple-year input{
+  font-size: 12px;
+}
+.check-order {
+  top: 50px;
+}
+}
+@media only screen and (min-width: 375px) {
+  .search-base input {
+    width: 90px;
+    font-size: 14px;
+  }
+  .check-order {
+    top: unset;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .search-base input {
+    width: 85px;
+    font-size: 14px;
+  }
+  .check-order {
+    top: unset;
+  }
+}
+

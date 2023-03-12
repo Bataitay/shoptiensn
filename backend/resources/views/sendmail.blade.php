@@ -10,15 +10,15 @@
     <h1 style="text-align: center">ĐƠN HÀNG SERI SINH NHẬT NGÀY {{$date}}</h1>
     <p>Bình thân mến,</p>
     <p >Thông tin đơn hàng</p>
-    <p>Tên người mua: {{$name}}</p>
-    <p>Số điện thoại: <a href="{{$phone}}">{{$phone}}</a></p>
-    <p>Địa chỉ:{{$address}}</p>
-    <p>Ghi chú: {{$note ?? ''}}</p>
+    <p>Tên người mua: {{$data['name']}}</p>
+    <p>Số điện thoại: <a href="">{{$data['phone']}}</a></p>
+    <p>Địa chỉ:{{$data['address']}}</p>
+    <p>Ghi chú: {{$data['note'] ?? ''}}</p>
     <p><b>Nội dung mua:<b></p>
-    <p>Seri: {{$codeAndSeri}} <span>-Mệnh giá: {{$faceValueOfMoney}}</span><span>-Giá bán:{{$price ?? ''}}</span></p>
-    <br>
-    <p>Tiền ship: {{$pay_method == 1 ? '30.000 vnd' : '0'}}</p>
-    <p>Phương thức thanh toán: {{$pay_method == 1 ? 'COD' : 'chuyển khoản'}}</p>
+        @foreach ($data['ifOrder'] as $value)
+            <p>Seri: {{$value['code']}} {{$value['seri']}} Mệnh giá: {{$value['displayValue']}} Giá: {{$value['price']}}</p>
+        @endforeach
+    <p>Phương thức thanh toán: {{$data['pay_method'] == 1 ? 'COD' : 'Chuyển khoản' }}</p>
     <p>Tổng tiền: {{$total}}</p>
 </body>
 </html>

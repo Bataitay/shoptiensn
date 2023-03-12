@@ -20,31 +20,10 @@
           <tbody>
             <ng-container *ngIf="getOrder">
             <tr *ngFor="let value of getOrder; let index = index">
-              <td scope="col" #codeAndSeri>{{value.code}} {{value.seri}}</td>
-              <td scope="col" #faceValueOfMoney>{{value.displayValue}}</td>
-              <td scope="col" #price *ngIf="value.displayValue == 1000">
-                {{ price1k }}
-              </td>
-              <td scope="col" #price *ngIf="value.displayValue == 2000">
-                {{ price2k }}
-              </td>
-              <td scope="col" #price *ngIf="value.displayValue == 5000">
-                {{ price5k }}
-              </td>
-              <td scope="col" #price *ngIf="value.displayValue == 10000">
-                {{ price10k }}
-              </td>
-              <td scope="col" #price *ngIf="value.displayValue == 20000">
-                {{ price20k }}
-              </td>
-              <td scope="col" #price *ngIf="value.displayValue == 50000">
-                {{ price50k }}
-              </td>
-              <td scope="col" #price *ngIf="value.displayValue == 100000">
-                {{ price100k }}
-              </td>
-              <td scope="col" #price *ngIf="value.displayValue == 200000">
-                {{ price200k }}
+              <td scope="col">{{value.code}} {{value.seri}}</td>
+              <td scope="col">{{value.displayValue}}</td>
+              <td scope="col">
+                {{ value.price }}
               </td>
               <td><i class="fa-solid fa-trash-can" (click)="delete(index)"></i></td>
             </tr>
@@ -52,7 +31,7 @@
             <tr>
               <th scope="row">Phí ship</th>
               <td>{{ship}}</td>
-              <td  #total>Tổng</td>
+              <td>Tổng: {{getOrder.length == 0 ? 0 : totalOrder}}</td>
               <td></td>
             </tr>
           </tbody>
@@ -87,7 +66,7 @@
             <input class="btn tranfer form-control" formControlName="pay_method" [value]="2" readonly (click)="tranfer()" placeholder="Chuyển khoản">
           </div>
         </div>
-        <label class="col-form-label">Vui lòng chuẩn bị <b>150.000đ</b> {{method == 1 ? "để trả khi nhận hàng" : "theo thông tin sau"}} </label>
+        <label class="col-form-label">Vui lòng chuẩn bị <b>{{totalOrder ? totalAndShip  : ship }}</b> {{method == 1 ? "để trả khi nhận hàng" : "theo thông tin sau"}} </label>
         <div class="row col-12" *ngIf="method == 2">
           <div class="col-6 form-group">
             <label for="recipient-name" class="col-form-label">Tên tài khoản:</label>
